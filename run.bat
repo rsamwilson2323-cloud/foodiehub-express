@@ -1,8 +1,32 @@
 @echo off
-chcp 65001 >nul
-echo Installing dependencies...
-call npm install
-if %errorlevel% neq 0 pause && exit /b 1
-echo Starting server...
-npm run dev
+title FoodieHub Express
+
+echo ==========================================
+echo      FoodieHub Express
+echo ==========================================
+echo.
+
+if not exist package.json (
+    echo ERROR: package.json not found.
+    pause
+    exit /b 1
+)
+
+if not exist node_modules (
+    echo Installing dependencies...
+    npm install
+    if errorlevel 1 (
+        echo.
+        echo Installation failed.
+        pause
+        exit /b 1
+    )
+)
+
+echo.
+echo Starting Vite development server...
+echo.
+
+npm run dev -- --host
+
 pause
